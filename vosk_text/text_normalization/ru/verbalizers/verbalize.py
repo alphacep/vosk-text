@@ -16,6 +16,7 @@ from vosk_text.text_normalization.en.graph_utils import GraphFst
 from vosk_text.text_normalization.en.verbalizers.whitelist import WhiteListFst
 from vosk_text.text_normalization.ru.verbalizers.cardinal import CardinalFst
 from vosk_text.text_normalization.ru.verbalizers.date import DateFst
+from vosk_text.text_normalization.ru.verbalizers.range import RangeFst
 from vosk_text.text_normalization.ru.verbalizers.decimal import DecimalFst
 from vosk_text.text_normalization.ru.verbalizers.electronic import ElectronicFst
 from vosk_text.text_normalization.ru.verbalizers.measure import MeasureFst
@@ -45,6 +46,8 @@ class VerbalizeFst(GraphFst):
         decimal_graph = decimal.fst
         date = DateFst()
         date_graph = date.fst
+        range = RangeFst()
+        range_graph = range.fst
         measure = MeasureFst()
         measure_graph = measure.fst
         electronic = ElectronicFst()
@@ -60,6 +63,7 @@ class VerbalizeFst(GraphFst):
             | decimal_graph
             | ordinal_graph
             | date_graph
+            | range_graph
             | electronic_graph
             | money_graph
             | whitelist_graph

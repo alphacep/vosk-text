@@ -1,2 +1,2 @@
-pynini
+pynini==2.1.4
 regex

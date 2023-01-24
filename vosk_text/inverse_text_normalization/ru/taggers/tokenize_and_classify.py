@@ -19,6 +19,7 @@ from vosk_text.inverse_text_normalization.en.taggers.punctuation import Punctuat
 from vosk_text.inverse_text_normalization.en.taggers.word import WordFst
 from vosk_text.inverse_text_normalization.ru.taggers.cardinal import CardinalFst
 from vosk_text.inverse_text_normalization.ru.taggers.date import DateFst
+from vosk_text.inverse_text_normalization.ru.taggers.range import RangeFst
 from vosk_text.inverse_text_normalization.ru.taggers.decimals import DecimalFst
 from vosk_text.inverse_text_normalization.ru.taggers.electronic import ElectronicFst
 from vosk_text.inverse_text_normalization.ru.taggers.measure import MeasureFst
@@ -76,6 +77,7 @@ class ClassifyFst(GraphFst):
 
             measure_graph = MeasureFst(tn_measure=tn_classify.measure).fst
             date_graph = DateFst(tn_date=tn_classify.date).fst
+            range_graph = RangeFst(tn_range=tn_classify.range).fst
             word_graph = WordFst().fst
             time_graph = TimeFst(tn_time=tn_classify.time).fst
             money_graph = MoneyFst(tn_money=tn_classify.money).fst
@@ -88,6 +90,7 @@ class ClassifyFst(GraphFst):
                 pynutil.add_weight(whitelist_graph, 1.01)
                 | pynutil.add_weight(time_graph, 1.1)
                 | pynutil.add_weight(date_graph, 1.09)
+                | pynutil.add_weight(range_graph, 1.09)
                 | pynutil.add_weight(decimal_graph, 1.1)
                 | pynutil.add_weight(measure_graph, 1.1)
                 | pynutil.add_weight(ordinal_graph, 1.1)
