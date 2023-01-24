@@ -44,7 +44,16 @@ class RangeFst(GraphFst):
         separator = pynini.cross("x", " на ")  # between components
         number = cardinal.cardinal_numbers_default
 
-        tagger_graph = number + separator + number + separator + number
+        mm_word_var = ["миллиметр", "миллиметра", "миллиметров"]
+        mm_word = pynini.cross("мм", pynini.union(*mm_word_var))
+
+        sm_word_var = ["сантиметр", "сантиметра", "сантиметров"]
+        sm_word = pynini.cross("см", pynini.union(*sm_word_var))
+
+        tagger_graph = number + separator + number + separator + (
+            number |
+            pynutil.add_weight(number + pynini.accep(" ") + (mm_word | sm_word), -10.0)
+        )
         tagger_graph = (pynutil.insert("value: \"") + tagger_graph + pynutil.insert("\"")).optimize()
 
         # verbalizer
